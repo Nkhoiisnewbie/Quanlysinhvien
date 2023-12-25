@@ -1,0 +1,116 @@
+#include <stdio.h>
+#include <string.h>
+
+
+struct SinhVien {
+    char ma_sv[10];
+    char ten_sv[50];
+    char ngay_sinh[11];
+    float diem_tb;
+    char gioi_tinh[5];
+    char nganh_hoc[30];
+};
+
+struct SinhVien danh_sach_sinh_vien[100];
+int so_luong_sinh_vien = 0;
+
+// Hàm nhập danh sách sinh viên
+void nhap_danh_sach_sinh_vien() {
+    printf("Nhap so luong sinh vien: ");
+    scanf("%d", &so_luong_sinh_vien);
+
+    for (int i = 0; i < so_luong_sinh_vien; i++) {
+        printf("Nhap thong tin cho sinh vien thu %d:\n", i + 1);
+        printf("Ma SV: ");
+        scanf("%s", danh_sach_sinh_vien[i].ma_sv);
+        printf("Ten SV: ");
+        scanf("%s", danh_sach_sinh_vien[i].ten_sv);
+        printf("Ngay sinh (dd/mm/yyyy): ");
+        scanf("%s", danh_sach_sinh_vien[i].ngay_sinh);
+        printf("Diem TB: ");
+        scanf("%f", &danh_sach_sinh_vien[i].diem_tb);
+        printf("Gioi tinh (Nam/Nu): ");
+        scanf("%s", danh_sach_sinh_vien[i].gioi_tinh);
+        printf("Nganh hoc: ");
+        scanf("%s", danh_sach_sinh_vien[i].nganh_hoc);
+    }
+}
+
+void xuat_danh_sach_sinh_vien() {
+    printf("Danh sach sinh vien:\n");
+    for (int i = 0; i < so_luong_sinh_vien; i++) {
+        printf("Ma SV: %s, Ten: %s, Ngay sinh: %s, Diem TB: %.2f, Gioi tinh: %s, Nganh hoc: %s\n",
+               danh_sach_sinh_vien[i].ma_sv, danh_sach_sinh_vien[i].ten_sv,
+               danh_sach_sinh_vien[i].ngay_sinh, danh_sach_sinh_vien[i].diem_tb,
+               danh_sach_sinh_vien[i].gioi_tinh, danh_sach_sinh_vien[i].nganh_hoc);
+    }
+}
+void xuat_sinh_vien_tb_lon_hon_5() {
+    printf("Sinh vien co diem trung binh > 5:\n");
+    for (int i = 0; i < so_luong_sinh_vien; i++) {
+        if (danh_sach_sinh_vien[i].diem_tb > 5) {
+            printf("Ma SV: %s, Ten: %s, Diem TB: %.2f\n",
+                   danh_sach_sinh_vien[i].ma_sv, danh_sach_sinh_vien[i].ten_sv,
+                   danh_sach_sinh_vien[i].diem_tb);
+        }
+    }
+}
+
+void xuat_sinh_vien_sinh_nhat_thang_12() {
+    printf("Sinh vien co sinh nhat trong thang 12:\n");
+    for (int i = 0; i < so_luong_sinh_vien; i++) {
+        char *thang_sinh = strtok(danh_sach_sinh_vien[i].ngay_sinh, "/");
+        if (thang_sinh != NULL && strcmp(thang_sinh, "12") == 0) {
+            printf("Ma SV: %s, Ten: %s, Ngay sinh: %s\n",
+                   danh_sach_sinh_vien[i].ma_sv, danh_sach_sinh_vien[i].ten_sv,
+                   danh_sach_sinh_vien[i].ngay_sinh);
+        }
+    }
+}
+
+void xuat_sinh_vien_nganh_cntt() {
+    printf("Sinh vien thuoc nganh cong nghe thong tin:\n");
+    for (int i = 0; i < so_luong_sinh_vien; i++) {
+        if (strcmp(danh_sach_sinh_vien[i].nganh_hoc, "CNTT") == 0) {
+            printf("Ma SV: %s, Ten: %s, Nganh hoc: %s\n",
+                   danh_sach_sinh_vien[i].ma_sv, danh_sach_sinh_vien[i].ten_sv,
+                   danh_sach_sinh_vien[i].nganh_hoc);
+        }
+    }
+}
+
+void xuat_sinh_vien_diem_tb_cao_nhat() {
+    int vi_tri_max = 0;
+    for (int i = 1; i < so_luong_sinh_vien; i++) {
+        if (danh_sach_sinh_vien[i].diem_tb > danh_sach_sinh_vien[vi_tri_max].diem_tb) {
+            vi_tri_max = i;
+        }
+    }
+
+    printf("Sinh vien co diem trung binh cao nhat:\n");
+    printf("Ma SV: %s, Ten: %s, Diem TB: %.2f\n",
+           danh_sach_sinh_vien[vi_tri_max].ma_sv, danh_sach_sinh_vien[vi_tri_max].ten_sv,
+           danh_sach_sinh_vien[vi_tri_max].diem_tb);
+}
+
+void dem_so_luong_sinh_vien_nu() {
+    int so_luong_nu = 0;
+    for (int i = 0; i < so_luong_sinh_vien; i++) {
+        if (strcmp(danh_sach_sinh_vien[i].gioi_tinh, "Nu") == 0) {
+            so_luong_nu++;
+        }
+    }
+
+    printf("So luong sinh vien nu la: %d\n", so_luong_nu);
+}
+
+int main() {
+    nhap_danh_sach_sinh_vien();
+    xuat_danh_sach_sinh_vien();
+    xuat_sinh_vien_nganh_cntt();
+    xuat_sinh_vien_tb_lon_hon_5();
+    xuat_sinh_vien_diem_tb_cao_nhat();
+    xuat_sinh_vien_sinh_nhat_thang_12();
+    dem_so_luong_sinh_vien_nu();
+    return 0;
+}
