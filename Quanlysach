@@ -1,0 +1,110 @@
+#include<stdio.h>
+#include<string.h>
+#define MAX 100
+
+ typedef struct Sach{
+	char masach[20];
+	char tensach[30];
+	char tentacgia[30];
+	char loaisach[10];
+	int namxuatban;
+	int giatien,soluong;
+}Sachh;
+
+void nhapttsach(Sachh &x){
+	printf("Nhap ma sach: \n");
+	scanf("%s",&x.masach);
+	getchar();
+	printf("Nhap ten sach: \n");
+	gets(x.tensach);
+	printf("Nhap loai sach: \n");
+	gets(x.loaisach);
+	printf("Nam xuat ban: \n");
+	scanf("%d",&x.namxuatban);
+	printf("Nhap gia tien: \n");
+	scanf("%d",&x.giatien);
+	printf("Nhap so luong: \n");
+	scanf("%d",&x.soluong);
+}
+
+void xuatttsach(Sachh x){
+	printf("------THONG TIN QUYEN SACH------\n");
+	printf("Ma: %s\n",x.masach);
+	printf("Ten: %s\n",x.tensach);
+	printf("Loai: %s\n",x.loaisach);
+	printf("Nam: %d\n",x.namxuatban);
+	printf("%d000vnd \n",x.giatien);
+	printf("%d quyen \n",x.soluong);
+}
+
+void nhapSLsach(int &n){
+	printf("Nhap so luong sach: \n");
+	scanf("%d",&n);
+}
+
+void nhapDS(Sachh a[],int n){
+	for(int i=0;i<n;i++){
+	printf("Nhap thong tin quyen sach thu %d\n",i+1);
+	printf("Ma sach: ");
+	scanf("%s",&a[i].masach);
+	printf("Nhap ten sach: \n");
+	scanf("%s",&a[i].tensach);
+	printf("Loai sach: \n");
+	scanf("%s",&a[i].loaisach);
+	printf("Nam xuat ban: ");
+	scanf("%d",&a[i].namxuatban);
+	printf("Nhap so tien: \n");
+	scanf("%d",&a[i].giatien);
+	printf("Nhap so luong: \n");
+	scanf("%d",&a[i].soluong);
+	}
+}
+
+void xuatDS(Sachh a[],int n)
+{
+	for(int i=0;i<n;i++)
+	{
+		printf("Ma sach: %s, Ten sach: %s,	Loai sach: %s,	Nam xuat ban: %d,	Gia tien:	%d.000vnd,	So luong: %d quyen\n",a[i].masach,a[i].tensach,a[i].loaisach,a[i].namxuatban,a[i].giatien,a[i].soluong);
+	}
+}
+
+float tongtien( Sachh a[],int n){
+	float tong = 0;
+	for(int i=0;i<n;i++){
+		tong+=a[i].giatien;
+	}
+	return tong;
+}
+
+void xuatsachtruocnam2000( Sachh a[],int n)
+{
+	for(int i=0;i<n;i++){
+		if(a[i].namxuatban<2000)
+			xuatttsach(a[i]);
+	}
+}
+
+int soluongsachcogiahon50k(Sachh a[],int n)
+{
+	int dem = 0;
+	for(int i=0;i<n;i++){
+		if(a[i].giatien>50)
+			dem++;
+	}
+	return dem;
+}
+
+int main(){
+	Sachh a[100];
+	Sachh x;
+	int n;
+	nhapSLsach(n);
+	nhapDS(a,n);
+	xuatDS(a,n);
+	float tong = tongtien(a,n);
+	printf("\nTong tien sach  la: %.2f0\n", tong);
+	printf("\nSach xuat ban truoc nam 2000 la: \n ");
+	xuatsachtruocnam2000(a,n);
+	printf("\n So luong sach co gia hon 50000 la: %d",soluongsachcogiahon50k(a,n));
+	return 1;
+}
