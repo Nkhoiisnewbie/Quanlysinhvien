@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<string.h>
+#include<ctype.h>
+#include<stdlib.h>
+
+typedef struct Date{
+	unsigned char ngay;
+	unsigned char thang;
+	int nam;
+}date;
+
+typedef struct Sinhvien{
+	char ma[20];
+	char hoten[30];
+	char gt [10];
+	date ns;
+	char nganh[30];
+	float dtb;
+}SV;
+
+void nhapngaysinh(date &d){
+	printf("Nhap ngay: \n");
+	scanf("%d",&d.ngay);
+	printf("Nhap thang: \n");
+	scanf("%d",&d.thang);
+	printf("Nhap nam: \n");
+	scanf("%d",&d.nam);
+}
+
+void xuatngaysinh(date d){
+	printf("Ngay thang nam sinh: \n");
+	printf("%02u/%02u/%d \n",d.ngay,d.thang,d.nam);
+}
+
+void nhapSL(int &n){
+	printf("Nhap so luong sinh vien: \n");
+	scanf("%d",&n);
+}
+
+void nhapDSsv(SV a[], int n){
+	printf("-----THONG TIN SINH VIEN-----\n");
+	for(int i=0;i<n;i++){
+		printf("Thong tin sinh vien thu %d: \n",i+1);
+		printf("Nhap mssv: \n");
+		scanf("%s",&a[i].ma);
+		getchar();
+		printf("Nhap ho va ten: \n");
+		gets(a[i].hoten);
+		printf("Nhap gioi tinh: \n");
+		do{
+			scanf("%s",&a[i].gt);
+			if(strcmp(a[i].gt,"Nam")!=0&&strcmp(a[i].gt,"Nu")!=0)
+				printf("Vui long nhap lai gioi tinh: ");
+		}while((strcmp(a[i].gt,"Nam")!=0&&strcmp(a[i].gt,"Nu")!=0));
+		getchar();
+		printf("Nhap nganh: \n");
+		gets(a[i].nganh);
+		printf("Nhap DTB: \n");
+		scanf("%f",&a[i].dtb);
+	}
+}
+
+void xuatDSsv(SV a[],int n){
+	printf("-----DANH SACH SINH VIEN-----\n");
+	for(int i=0;i<n;i++){
+		printf("MSSV: %s	Ho va ten: %s 	Gioi tinh: %s     Nganh: %s     DTB: %.2f\n",a[i].ma,a[i].hoten,a[i].gt,a[i].nganh,a[i].dtb);
+	}
+}
+
+ int main(){
+ 	SV a[100];
+ 	int n;
+ 	nhapSL(n);
+ 	nhapDSsv(a,n);
+ 	xuatDSsv(a,n);
+ 	return 0;
+ }
